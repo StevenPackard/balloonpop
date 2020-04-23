@@ -117,6 +117,11 @@ form.classList.add("hidden")
 draw()
 }
 
+function changePlayer(){
+  document.getElementById("player-form").classList.remove("hidden")
+  document.getElementById("game").classList.add("hidden")
+}
+
 function savePlayers(){
   window.localStorage.setItem("players", JSON.stringify(players))
 }
