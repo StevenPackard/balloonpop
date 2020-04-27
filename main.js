@@ -1,7 +1,3 @@
-//BUTTONS
-let startButton = document.getElementById("start-button")
-let inflateButton = document.getElementById("inflate-button")
-
 //#region GAME LOGIC AND DATA
 
 //DATA
@@ -16,10 +12,12 @@ let gameLength = 5000
 let clockId = 0
 let timeRemaining = 0
 let currentPlayer = {}
+let currentColor = "red"
+let possibleColors =["red", "green", "blue", "purple", "pink"]
 
 function startGame(){
-  startButton.setAttribute("disabled", "true")
-  inflateButton.removeAttribute("disabled")
+  document.getElementById("game-controls").classList.remove("hidden")
+  document.getElementById("main-controls").classList.add("hidden")
   startClock()
   setTimeout(stopGame, gameLength)
 }
@@ -47,11 +45,20 @@ function inflate(){
 
   if(height >= maxsize){
     console.log("pop the balloon")
-        currentPopCount++
-        height = 0
-        width = 0
-      }
-      draw()
+      let balloonElement = document.getElementById("balloon") 
+      balloonElement.classList.remove(currentColor)
+      getRandomColor()
+      balloonElement.classList.add(currentColor)
+      currentPopCount++
+      height = 0
+      width = 0
+    }
+    draw()
+}
+
+function getRandomColor(){
+  let i = Math.floor(Math.random() * possibleColors.length);
+  currentColor = possibleColors[i]
 }
 
 function draw(){
@@ -74,8 +81,8 @@ function draw(){
 function stopGame(){
       console.log("the game is over")
 
-      inflateButton.setAttribute("disabled", "true")
-      startButton.removeAttribute("disabled")
+      document.getElementById("main-controls").classList.remove("hidden")
+      document.getElementById("game-controls").classList.add("hidden")
   
       clickCount = 0
       height = 120
