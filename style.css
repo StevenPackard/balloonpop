@@ -6,6 +6,7 @@
   --corners: 4px;
   --text-color:  #2c2b2b;
   --dark:  #2c2b2b;
+  --dark-lighten: #2c2b2b;
   --light: #fdfdfd;
 }
 
@@ -46,6 +47,7 @@ button{
   text-transform: uppercase;
   transition: all .2s ease;
   cursor: pointer;
+  padding: 1em;
 }
 
 button:hover{
@@ -89,6 +91,33 @@ button:hover{
 .d-flex.space-between{
   justify-content: space-between;
 }
+
+.d-flex.space-around{
+  justify-content: space-around;
+}
+
+.mt-1{
+  margin-top: .5em;
+}
+.mt-2{
+  margin-top: 1em;
+}
+.mt-3{
+  margin-top: 1.5em;
+}
+
+.mb-1{
+  margin-bottom: .5em;
+}
+.mb-2{
+  margin-bottom: 1em;
+}
+.mb-3{
+  margin-bottom: 1.5em;
+}
+
+
+
 
 .hidden{
   display: none !important;
