@@ -8,7 +8,7 @@ let inflationRate = 20
 let maxsize = 300
 let highestPopCount = 0
 let currentPopCount = 0
-let gameLength = 5000
+let gameLength = 10000
 let clockId = 0
 let timeRemaining = 0
 let currentPlayer = {}
@@ -18,6 +18,7 @@ let possibleColors =["red", "green", "blue", "purple", "pink"]
 function startGame(){
   document.getElementById("game-controls").classList.remove("hidden")
   document.getElementById("main-controls").classList.add("hidden")
+  document.getElementById("scoreboard").classList.add("hidden")
   startClock()
   setTimeout(stopGame, gameLength)
 }
@@ -42,18 +43,26 @@ function inflate(){
   clickCount++
   height += inflationRate
   width += inflationRate
+  checkBalloonPop()
+  draw()
+}
 
+function checkBalloonPop(){
   if(height >= maxsize){
     console.log("pop the balloon")
       let balloonElement = document.getElementById("balloon") 
       balloonElement.classList.remove(currentColor)
       getRandomColor()
       balloonElement.classList.add(currentColor)
+
+    // @ts-ignore
+    document.getElementById("pop-sound").play()
+
       currentPopCount++
       height = 0
       width = 0
     }
-    draw()
+
 }
 
 function getRandomColor(){
@@ -83,6 +92,7 @@ function stopGame(){
 
       document.getElementById("main-controls").classList.remove("hidden")
       document.getElementById("game-controls").classList.add("hidden")
+      document.getElementById("scoreboard").classList.remove("hidden")
   
       clickCount = 0
       height = 120
@@ -98,6 +108,7 @@ function stopGame(){
   
       stopClock()
       draw()
+      drawScoreboard()
 }
 
 //#endregion
@@ -125,6 +136,7 @@ form.reset()
 document.getElementById("game").classList.remove("hidden")
 form.classList.add("hidden")
 draw()
+drawScoreboard()
 }
 
 function changePlayer(){
@@ -141,4 +153,27 @@ function loadPlayers(){
     players = playersData
   }
 }
+
+
+function drawScoreboard(){
+  let template = ""
+
+  players.sort((p1, p2) => p2.topScore - p1.topScore)
+
+  players.forEach(player => {
+    template += `
+    <div class="d-flex space-between">
+    <span>
+      <i class="fa fa-user"></i>
+      ${player.name}
+    </span>
+    <span>Score: ${player.topScore}</span>
+  </div>
+  `
+  })
+
+document.getElementById("players").innerHTML = template
+}
+
+drawScoreboard()
 
